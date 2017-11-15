@@ -12,15 +12,15 @@
    "test_time"=>1513954801},
  :acts=>
   {1=>
-    {"get_balance"=>"993,251.2131196380360052",
-     "balance_of"=>"447,898",
+    {"get_balance"=>"993,251.2114289819728583",
+     "balance_of"=>"447,880",
      "ico_ether_contributed"=>"100",
      "ico_tokens_received"=>"448,000",
      "refund_claimed"=>false,
      "airdrop_claimed"=>false,
      "locked"=>false},
    2=>
-    {"get_balance"=>"998,195.43572578008752316",
+    {"get_balance"=>"998,194.901928141945973",
      "balance_of"=>"383,999",
      "ico_ether_contributed"=>"100",
      "ico_tokens_received"=>"384,000",
@@ -61,7 +61,7 @@
      "locked"=>true},
    7=>
     {"get_balance"=>"999,399.8943329879548401",
-     "balance_of"=>"0",
+     "balance_of"=>"8",
      "ico_ether_contributed"=>"0",
      "ico_tokens_received"=>"0",
      "refund_claimed"=>false,
@@ -69,7 +69,7 @@
      "locked"=>false},
    8=>
     {"get_balance"=>"1,000,000",
-     "balance_of"=>"0",
+     "balance_of"=>"8",
      "ico_ether_contributed"=>"0",
      "ico_tokens_received"=>"0",
      "refund_claimed"=>false,
@@ -77,7 +77,7 @@
      "locked"=>false},
    9=>
     {"get_balance"=>"1,000,000",
-     "balance_of"=>"0",
+     "balance_of"=>"2",
      "ico_ether_contributed"=>"0",
      "ico_tokens_received"=>"0",
      "refund_claimed"=>false,
@@ -132,7 +132,7 @@
      "airdrop_claimed"=>false,
      "locked"=>false},
    16=>
-    {"get_balance"=>"1,000,000",
+    {"get_balance"=>"999,999.9120000000111759",
      "balance_of"=>"1",
      "ico_ether_contributed"=>"0",
      "ico_tokens_received"=>"0",

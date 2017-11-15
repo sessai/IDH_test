@@ -1,0 +1,464 @@
+2017-11-08 11:28:14 UTC
+
+========================================
+== Contract indaHash Coin initialized
+== 
+At address 0xF0d2264f3cBc91646776E174b1C62ca7e8A123a8
+
+===============================================================================
+============ Preliminary actions
+===============================================================================
+
+========================================
+== Set wallets
+== 
+
+ACTIONS
+@contract.transact_and_wait.set_wallet("0x000c14a7cAD4d8d41cd1c375083557e05c79f476") - by 0x7Df97252...
+@contract.transact_and_wait.set_admin_wallet("0xDF8f647384Ed63AA931B3C509cC07c658bD45d00") - by 0x7Df97252...
+
+VERIFY
+ok  val [wallet acc]  is 000c14a7cad4d8d41cd1c375083557e05c79f476 as expected
+ok  val [admin_wallet acc]  is df8f647384ed63aa931b3c509cc07c658bd45d00 as expected
+
+DIFFERENCES
+[:c, :wallet, "7df97252dba710b75a5364bf4bcddf12c9e4559d", "000c14a7cad4d8d41cd1c375083557e05c79f476"]
+[:c, :admin_wallet, "7df97252dba710b75a5364bf4bcddf12c9e4559d", "df8f647384ed63aa931b3c509cc07c658bd45d00"]
+
+===============================================================================
+============ Before presale
+===============================================================================
+
+========================================
+== Mint marketing: ok
+== 
+
+ACTIONS
+@contract.transact_and_wait.mint_marketing("0xf12831Ac016d243137eB1Cf51414a05102Fa0361",50000000000000) - by 0x7Df97252...
+@contract.transact_and_wait.mint_marketing("0x741d381E9149B6B1d61639c98ca453D31737D85c",30000000000000) - by 0x7Df97252...
+@contract.transact_and_wait.mint_marketing("0x927a9cbcf2b37a3517890fd757cdA0EFe7716b21",1000000) - by 0x7Df97252...
+
+VERIFY
+ok  val [balance_of acc10] 10 is 50000000000000 as expected
+ok  diff [balance_of acc10] is 50000000000000 as expected
+ok  val [balance_of acc11] 11 is 30000000000000 as expected
+ok  diff [balance_of acc11] is 30000000000000 as expected
+ok  val [balance_of acc12] 12 is 0 as expected
+ok  diff [balance_of acc12] is 0 as expected
+ok  val [locked acc10] 10 is true as expected
+ok  val [locked acc11] 11 is true as expected
+ok  val [locked acc12] 12 is false as expected
+
+DIFFERENCES
+[:c, :tokens_issued_total, 0.0, 80000000.0, 80000000.0]
+[:c, :tokens_issued_mkt, 0.0, 80000000.0, 80000000.0]
+[10, :balance_of, 0.0, 50000000.0, 50000000.0]
+[10, :locked, false, true]
+[11, :balance_of, 0.0, 30000000.0, 30000000.0]
+[11, :locked, false, true]
+
+========================================
+== Early contribution: fails
+== 
+
+ACTIONS
+CONTRIBUTE : @client.transfer(acct_#<Eth::Key:0x00000000042ce7d8>, 0xF0d2264f3cBc91646776E174b1C62ca7e8A123a8, 10)
+
+VERIFY
+ok  val [balance_of acc1] 1 is 0 as expected
+ok  diff [balance_of acc1] is 0 as expected
+
+DIFFERENCES
+[1, :get_balance, 992950.22677089, 992950.1387708901, -0.088]
+
+===============================================================================
+============ Presale
+===============================================================================
+
+========================================
+== presale
+== 
+
+ACTIONS
+@contract.transact_and_wait.set_test_time(1510153201) - by 0x7Df97252...
+
+VERIFY
+ok  val [at_now acc]  is 1510153201 as expected
+
+DIFFERENCES
+[:c, :at_now, 1, 1510153201, 1510153200]
+[:c, :test_time, 1, 1510153201, 1510153200]
+
+========================================
+== Some presale contributions
+== 
+
+ACTIONS
+CONTRIBUTE : @client.transfer(acct_#<Eth::Key:0x00000000042ce7d8>, 0xF0d2264f3cBc91646776E174b1C62ca7e8A123a8, 100)
+CONTRIBUTE : @client.transfer(acct_#<Eth::Key:0x00000000042ce260>, 0xF0d2264f3cBc91646776E174b1C62ca7e8A123a8, 0.49)
+CONTRIBUTE : @client.transfer(acct_#<Eth::Key:0x00000000042cdd10>, 0xF0d2264f3cBc91646776E174b1C62ca7e8A123a8, 50000)
+CONTRIBUTE : @client.transfer(acct_#<Eth::Key:0x0000000003c86d58>, 0xF0d2264f3cBc91646776E174b1C62ca7e8A123a8, 50)
+
+VERIFY
+ok  val [balance_of acc1] 1 is 448000000000 as expected
+ok  diff [balance_of acc1] is 448000000000 as expected
+ok  val [balance_of acc2] 2 is 0 as expected
+ok  diff [balance_of acc2] is 0 as expected
+ok  val [balance_of acc3] 3 is 0 as expected
+ok  diff [balance_of acc3] is 0 as expected
+ok  diff [balance_of acc10] is 224000000000 as expected
+
+DIFFERENCES
+[:c, :eth, 0.0, 150.0, 150.0]
+[:c, :ico_ether_received, 0.0, 150.0, 150.0]
+[:c, :tokens_issued_total, 80000000.0, 80672000.0, 672000.0]
+[:c, :tokens_issued_ico, 0.0, 672000.0, 672000.0]
+[1, :get_balance, 992950.1387708901, 992850.135337042, -100.003433848]
+[1, :balance_of, 0.0, 448000.0, 448000.0]
+[1, :ico_ether_contributed, 0.0, 100.0, 100.0]
+[1, :ico_tokens_received, 0.0, 448000.0, 448000.0]
+[1, :locked, false, true]
+[2, :get_balance, 998074.545716066, 998074.457716066, -0.088]
+[3, :get_balance, 999835.1544638099, 999835.06646381, -0.088]
+[10, :get_balance, 997095.915717094, 997045.913603246, -50.00211384800001]
+[10, :balance_of, 50000000.0, 50224000.0, 224000.0]
+[10, :ico_ether_contributed, 0.0, 50.0, 50.0]
+[10, :ico_tokens_received, 0.0, 224000.0, 224000.0]
+
+===============================================================================
+============ After presale
+===============================================================================
+
+========================================
+== after presale
+== 
+
+ACTIONS
+@contract.transact_and_wait.set_test_time(1510758001) - by 0x7Df97252...
+
+VERIFY
+ok  val [at_now acc]  is 1510758001 as expected
+
+DIFFERENCES
+[:c, :at_now, 1510153201, 1510758001, 604800]
+[:c, :test_time, 1510153201, 1510758001, 604800]
+
+========================================
+== No more contributions accepted after presale end
+== 
+
+ACTIONS
+CONTRIBUTE : @client.transfer(acct_#<Eth::Key:0x00000000042ccd20>, 0xF0d2264f3cBc91646776E174b1C62ca7e8A123a8, 100)
+
+VERIFY
+ok  val [balance_of acc6] 6 is 0 as expected
+ok  diff [balance_of acc6] is 0 as expected
+
+DIFFERENCES
+[6, :get_balance, 999297.868445542, 999297.7804455421, -0.088]
+
+========================================
+== Remove lock
+== 
+
+ACTIONS
+@contract.transact_and_wait.remove_lock("0xCb3a421Abe0799054A22499B6b4026391A3c8ADf") - by 0xDF8f6473...
+
+VERIFY
+ok  val [locked acc1] 1 is false as expected
+
+DIFFERENCES
+[1, :locked, true, false]
+
+========================================
+== Token transfer attempt fails even if unlocked
+== 
+
+ACTIONS
+@contract.transact_and_wait.transfer("0x86350703e5885dd73d3945168bFa0a7A7E140E4F",100000000) - by 0xCb3a421A...
+
+VERIFY
+ok  diff [balance_of acc1] is 0 as expected
+ok  val [balance_of acc19] 19 is 0 as expected
+ok  diff [balance_of acc19] is 0 as expected
+
+DIFFERENCES
+[1, :get_balance, 992850.135337042, 992850.0473370419, -0.088]
+
+========================================
+== clawback/reclaim/airdop all fail
+== 
+
+ACTIONS
+@contract.transact_and_wait.owner_clawback() - by 0x7Df97252...
+@contract.transact_and_wait.reclaim_funds() - by 0xCb3a421A...
+@contract.transact_and_wait.claim_airdrop() - by 0xCb3a421A...
+
+VERIFY
+ok  diff [get_balance acc] is 0 as expected
+***ERR*** diff [get_balance acc1] is -176000000000000000 expected 0
+ok  diff [balance_of acc1] is 0 as expected
+
+DIFFERENCES
+[1, :get_balance, 992850.0473370419, 992849.871337042, -0.176]
+
+===============================================================================
+============ ICO - week 1
+===============================================================================
+
+========================================
+== ico week 1
+== 
+
+ACTIONS
+@contract.transact_and_wait.set_test_time(1511967601) - by 0x7Df97252...
+
+VERIFY
+ok  val [at_now acc]  is 1511967601 as expected
+
+DIFFERENCES
+[:c, :at_now, 1510758001, 1511967601, 1209600]
+[:c, :test_time, 1510758001, 1511967601, 1209600]
+
+========================================
+== ICO contribution week 1
+== 
+
+ACTIONS
+CONTRIBUTE : @client.transfer(acct_#<Eth::Key:0x00000000042ce260>, 0xF0d2264f3cBc91646776E174b1C62ca7e8A123a8, 100)
+
+VERIFY
+ok  val [balance_of acc2] 2 is 384000000000 as expected
+ok  diff [balance_of acc2] is 384000000000 as expected
+
+DIFFERENCES
+[:c, :eth, 150.0, 250.0, 100.0]
+[:c, :ico_ether_received, 150.0, 250.0, 100.0]
+[:c, :tokens_issued_total, 80672000.0, 81056000.0, 384000.0]
+[:c, :tokens_issued_ico, 672000.0, 1056000.0, 384000.0]
+[2, :get_balance, 998074.457716066, 997974.454948202, -100.002767864]
+[2, :balance_of, 0.0, 384000.0, 384000.0]
+[2, :ico_ether_contributed, 0.0, 100.0, 100.0]
+[2, :ico_tokens_received, 0.0, 384000.0, 384000.0]
+[2, :locked, false, true]
+
+===============================================================================
+============ ICO - week 2
+===============================================================================
+
+========================================
+== ico week 2
+== 
+
+ACTIONS
+@contract.transact_and_wait.set_test_time(1512572401) - by 0x7Df97252...
+
+VERIFY
+ok  val [at_now acc]  is 1512572401 as expected
+
+DIFFERENCES
+[:c, :at_now, 1511967601, 1512572401, 604800]
+[:c, :test_time, 1511967601, 1512572401, 604800]
+
+========================================
+== ICO contribution week 2
+== 
+
+ACTIONS
+CONTRIBUTE : @client.transfer(acct_#<Eth::Key:0x00000000042cdd10>, 0xF0d2264f3cBc91646776E174b1C62ca7e8A123a8, 100)
+
+VERIFY
+ok  diff [balance_of acc3] is 352000000000 as expected
+ok  diff [get_balance acc] is 100000000000000000000 as expected
+
+DIFFERENCES
+[:c, :eth, 250.0, 350.0, 100.0]
+[:c, :ico_ether_received, 250.0, 350.0, 100.0]
+[:c, :tokens_issued_total, 81056000.0, 81408000.0, 352000.0]
+[:c, :tokens_issued_ico, 1056000.0, 1408000.0, 352000.0]
+[3, :get_balance, 999835.06646381, 999735.0636954841, -100.002768326]
+[3, :balance_of, 0.0, 352000.0, 352000.0]
+[3, :ico_ether_contributed, 0.0, 100.0, 100.0]
+[3, :ico_tokens_received, 0.0, 352000.0, 352000.0]
+[3, :locked, false, true]
+
+===============================================================================
+============ ICO - week 3
+===============================================================================
+
+========================================
+== ico week 3
+== 
+
+ACTIONS
+@contract.transact_and_wait.set_test_time(1513177201) - by 0x7Df97252...
+
+VERIFY
+ok  val [at_now acc]  is 1513177201 as expected
+
+DIFFERENCES
+[:c, :at_now, 1512572401, 1513177201, 604800]
+[:c, :test_time, 1512572401, 1513177201, 604800]
+
+========================================
+== ICO contribution week 3
+== 
+
+ACTIONS
+CONTRIBUTE : @client.transfer(acct_#<Eth::Key:0x00000000042ce7d8>, 0xF0d2264f3cBc91646776E174b1C62ca7e8A123a8, 10)
+CONTRIBUTE : @client.transfer(acct_#<Eth::Key:0x00000000042ce260>, 0xF0d2264f3cBc91646776E174b1C62ca7e8A123a8, 20)
+
+VERIFY
+ok  diff [balance_of acc1] is 32000000000 as expected
+ok  diff [balance_of acc2] is 64000000000 as expected
+ok  val [locked acc1] 1 is true as expected
+ok  val [locked acc2] 2 is true as expected
+
+DIFFERENCES
+[:c, :eth, 350.0, 380.0, 30.0]
+[:c, :ico_ether_received, 350.0, 380.0, 30.0]
+[:c, :tokens_issued_total, 81408000.0, 81504000.0, 96000.0]
+[:c, :tokens_issued_ico, 1408000.0, 1504000.0, 96000.0]
+[1, :get_balance, 992849.871337042, 992839.8695628301, -10.001774212]
+[1, :balance_of, 448000.0, 480000.0, 32000.0]
+[1, :ico_ether_contributed, 100.0, 110.0, 10.0]
+[1, :ico_tokens_received, 448000.0, 480000.0, 32000.0]
+[1, :locked, false, true]
+[2, :get_balance, 997974.454948202, 997954.45350399, -20.001444212]
+[2, :balance_of, 384000.0, 448000.0, 64000.0]
+[2, :ico_ether_contributed, 100.0, 120.0, 20.0]
+[2, :ico_tokens_received, 384000.0, 448000.0, 64000.0]
+
+===============================================================================
+============ After ICO (UNSUCCESSFUL)
+===============================================================================
+
+========================================
+== after ico
+== 
+
+ACTIONS
+@contract.transact_and_wait.set_test_time(1513782001) - by 0x7Df97252...
+
+VERIFY
+ok  val [at_now acc]  is 1513782001 as expected
+
+DIFFERENCES
+[:c, :at_now, 1513177201, 1513782001, 604800]
+[:c, :test_time, 1513177201, 1513782001, 604800]
+
+========================================
+== Token transfer attempt fails 
+== 
+
+ACTIONS
+@contract.transact_and_wait.remove_lock("0xCb3a421Abe0799054A22499B6b4026391A3c8ADf") - by 0xDF8f6473...
+@contract.transact_and_wait.transfer("0x86350703e5885dd73d3945168bFa0a7A7E140E4F",100000000) - by 0xCb3a421A...
+
+VERIFY
+ok  val [locked acc1] 1 is false as expected
+ok  diff [balance_of acc1] is 0 as expected
+ok  val [balance_of acc19] 19 is 0 as expected
+ok  diff [balance_of acc19] is 0 as expected
+
+DIFFERENCES
+[1, :get_balance, 992839.8695628301, 992839.78156283, -0.088]
+[1, :locked, true, false]
+
+========================================
+== Claim airdrop not possible
+== 
+
+ACTIONS
+@contract.transact_and_wait.claim_airdrop() - by 0xf12831Ac...
+
+VERIFY
+ok  diff [balance_of acc10] is 0 as expected
+
+DIFFERENCES
+[10, :get_balance, 997045.913603246, 997045.8256032461, -0.088]
+
+========================================
+== Clawback not possible
+== 
+
+ACTIONS
+@contract.transact_and_wait.owner_clawback() - by 0x7Df97252...
+
+VERIFY
+ok  diff [get_balance acc] is 0 as expected
+
+DIFFERENCES
+(no differences found)
+
+========================================
+== Reclaim funds - ok
+== 
+
+ACTIONS
+@contract.transact_and_wait.reclaim_funds() - by 0xCb3a421A...
+
+VERIFY
+ok  diff [balance_of acc1] is -480000000000 as expected
+ok  diff [get_balance acc1] is ≈110000000000000000000 as expected (within 0.1 ether)
+
+DIFFERENCES
+[:c, :eth, 380.0, 270.0, -110.0]
+[:c, :tokens_issued_total, 81504000.0, 81024000.0, -480000.0]
+[1, :get_balance, 992839.78156283, 992949.780414342, 109.998851512]
+[1, :balance_of, 480000.0, 0.0, -480000.0]
+[1, :refund_claimed, false, true]
+
+===============================================================================
+============ After 2-day cooldown period
+===============================================================================
+
+========================================
+== after cooldown
+== 
+
+ACTIONS
+@contract.transact_and_wait.set_test_time(1513954801) - by 0x7Df97252...
+
+VERIFY
+ok  val [at_now acc]  is 1513954801 as expected
+
+DIFFERENCES
+[:c, :at_now, 1513782001, 1513954801, 172800]
+[:c, :test_time, 1513782001, 1513954801, 172800]
+
+===============================================================================
+============ After 2-day cooldown period
+===============================================================================
+
+========================================
+== after cooldown
+== 
+
+ACTIONS
+@contract.transact_and_wait.set_test_time(1521730801) - by 0x7Df97252...
+
+VERIFY
+ok  val [at_now acc]  is 1521730801 as expected
+
+DIFFERENCES
+[:c, :at_now, 1513954801, 1521730801, 7776000]
+[:c, :test_time, 1513954801, 1521730801, 7776000]
+
+========================================
+== Clawback ok
+== 
+
+ACTIONS
+@contract.transact_and_wait.owner_clawback() - by 0x7Df97252...
+
+VERIFY
+ok  diff [get_balance acc] is 270000000000000000000 as expected
+ok  diff [get_balance acc] is -270000000000000000000 as expected
+
+DIFFERENCES
+[:c, :eth, 270.0, 0.0, -270.0]
+
+Errors found: 1
+
+2017-11-08 11:29:07 UTC

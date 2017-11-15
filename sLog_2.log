@@ -1,0 +1,42 @@
+2017-11-08 10:09:31 UTC
+
+========================================
+== Contract indaHash Coin initialized
+== 
+At address 0x54bcE08D896298c8d3800Cd1725AE38d7917fC7e
+
+========================================
+== transferFrom : to locked account
+== 
+
+ACTIONS
+@contract.transact_and_wait.transfer_from("0xCb3a421Abe0799054A22499B6b4026391A3c8ADf","0xEf54e96C92eE6487785ab0368295a0c4F1a0855B",2000000) - by 0xb632B057...
+
+VERIFY
+ok  diff [balance_of acc2] is 0 as expected
+ok  diff [balance_of acc1] is 0 as expected
+ok  diff [balance_of acc6] is 0 as expected
+
+DIFFERENCES
+[2, :get_balance, 998194.990956796, 998194.902956796, -0.088]
+
+========================================
+== transferFrom : remaining 2 to unlocked account
+== 
+
+ACTIONS
+@contract.transact_and_wait.transfer_from("0xCb3a421Abe0799054A22499B6b4026391A3c8ADf","0x70641363BD928Bdcc7fDd71b83F9378Caee931A2",2000000) - by 0xb632B057...
+
+VERIFY
+ok  diff [balance_of acc2] is 0 as expected
+ok  diff [balance_of acc1] is -2000000 as expected
+ok  diff [balance_of acc9] is 2000000 as expected
+
+DIFFERENCES
+[1, :balance_of, 447882.0, 447880.0, -2.0]
+[2, :get_balance, 998194.902956796, 998194.901928142, -0.001028654]
+[9, :balance_of, 0.0, 2.0, 2.0]
+
+Errors found: 0
+
+2017-11-08 10:09:40 UTC
